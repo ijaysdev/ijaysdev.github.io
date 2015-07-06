@@ -11,25 +11,28 @@
     
 
     
-    <meta name="description" content="Android中的一些小技巧简化findViewById开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。
-···     public  T $(int id) {        return (T) findViewById(id);     }···
+    <meta name="description" content="简化findViewById开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。
+123public &amp;lt;T extends View&amp;gt; T $(int id) &amp;#123;   return (T) findViewById(id);&amp;#125;
 调用的时候:
-···    EditText et = $(R.id.id_name);···实际使用的时候可">
+1EditText et = $(R.id.id_name);
+实际使用的时候可以自己写一个My">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android中的一些小技巧">
 <meta property="og:url" content="http://yoursite.com/2015/07/06/Android中的一些小技巧/index.html">
 <meta property="og:site_name" content="JayS's blog">
-<meta property="og:description" content="Android中的一些小技巧简化findViewById开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。
-···     public  T $(int id) {        return (T) findViewById(id);     }···
+<meta property="og:description" content="简化findViewById开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。
+123public &amp;lt;T extends View&amp;gt; T $(int id) &amp;#123;   return (T) findViewById(id);&amp;#125;
 调用的时候:
-···    EditText et = $(R.id.id_name);···实际使用的时候可">
-<meta property="og:updated_time" content="2015-07-06T13:58:47.864Z">
+1EditText et = $(R.id.id_name);
+实际使用的时候可以自己写一个My">
+<meta property="og:updated_time" content="2015-07-06T14:05:31.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中的一些小技巧">
-<meta name="twitter:description" content="Android中的一些小技巧简化findViewById开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。
-···     public  T $(int id) {        return (T) findViewById(id);     }···
+<meta name="twitter:description" content="简化findViewById开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。
+123public &amp;lt;T extends View&amp;gt; T $(int id) &amp;#123;   return (T) findViewById(id);&amp;#125;
 调用的时候:
-···    EditText et = $(R.id.id_name);···实际使用的时候可">
+1EditText et = $(R.id.id_name);
+实际使用的时候可以自己写一个My">
 
     
     
@@ -103,14 +106,15 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android中的一些小技巧"><span class="toc-number">1.</span> <span class="toc-text">Android中的一些小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.1.</span> <span class="toc-text">简化findViewById</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.</span> <span class="toc-text">简化findViewById</span></a></li></ol>
 		
 		</div>
 		
-		<h1 id="Android中的一些小技巧">Android中的一些小技巧</h1><h2 id="简化findViewById">简化findViewById</h2><p>开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。</p>
-<p>···<br>     public <t extends="" view=""> T $(int id) {<br>        return (T) findViewById(id);<br>     }<br>···</t></p>
+		<h1 id="简化findViewById">简化findViewById</h1><p>开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> &lt;T <span class="keyword">extends</span> View&gt; T $(<span class="keyword">int</span> id) &#123;</span><br><span class="line">   <span class="keyword">return</span> (T) findViewById(id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>调用的时候:</p>
-<p>···<br>    EditText et = $(R.id.id_name);<br>···<br>实际使用的时候可以自己写一个MyActivity继承Activity，实现该方法，以后所有的类都继承其即可。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EditText et = $(R.<span class="property">id</span>.id_name);</span><br></pre></td></tr></table></figure>
+<p>实际使用的时候可以自己写一个MyActivity继承Activity，实现该方法，以后所有的类都继承其即可。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -164,7 +168,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android中的一些小技巧"><span class="toc-number">1.</span> <span class="toc-text">Android中的一些小技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.1.</span> <span class="toc-text">简化findViewById</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.</span> <span class="toc-text">简化findViewById</span></a></li></ol>
  
   </div>
 
