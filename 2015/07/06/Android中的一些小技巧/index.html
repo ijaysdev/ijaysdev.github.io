@@ -25,7 +25,7 @@
 调用的时候:
 1EditText et = $(R.id.id_name);
 实际使用的时候可以自己写一个My">
-<meta property="og:updated_time" content="2015-07-27T14:44:33.930Z">
+<meta property="og:updated_time" content="2015-08-01T03:04:40.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中的一些小技巧">
 <meta name="twitter:description" content="简化findViewById开发中每次写findViewById让人觉得很麻烦，下面这种方法可以简化这种操作。
@@ -106,7 +106,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.</span> <span class="toc-text">简化findViewById</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android_Studio中使用Lamda表达式"><span class="toc-number">2.</span> <span class="toc-text">Android Studio中使用Lamda表达式</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.</span> <span class="toc-text">简化findViewById</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android_Studio中使用Lambda表达式"><span class="toc-number">2.</span> <span class="toc-text">Android Studio中使用Lambda表达式</span></a></li></ol>
 		
 		</div>
 		
@@ -116,7 +116,7 @@
 <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EditText et = $(R.<span class="property">id</span>.id_name);</span><br></pre></td></tr></table></figure>
 <p>实际使用的时候可以自己写一个MyActivity继承Activity，实现该方法，以后所有的类都继承其即可。这样在一定程度上减少了findViewById方法的书写。</p>
 <hr>
-<h1 id="Android_Studio中使用Lamda表达式">Android Studio中使用Lamda表达式</h1><p>在Android Studio中即使是使用Java8，用Lamda表达式仍然回报错。这里为了解决这个问题，要使用到一个叫<a href="https://github.com/evant/gradle-retrolambda" target="_blank" rel="external">retrolambda</a>的插件这样就能在Java6,Java7以及Android上使用Lamda表达式。</p>
+<h1 id="Android_Studio中使用Lambda表达式">Android Studio中使用Lambda表达式</h1><p>在Android Studio中即使是使用Java8，用Lamda表达式仍然回报错。这里为了解决这个问题，要使用到一个叫<a href="https://github.com/evant/gradle-retrolambda" target="_blank" rel="external">retrolambda</a>的插件这样就能在Java6,Java7以及Android上使用Lamda表达式。</p>
 <p>首先在项目的build.gradle文件中加入：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">classpath</span> <span class="string">'me.tatarka:gradle-retrolambda:3.2.0'</span></span><br></pre></td></tr></table></figure>
 <p>接下来在module.gradle文件中加入：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">apply</span> <span class="rule"><span class="attribute">plugin</span>:<span class="value"> <span class="string">'me.tatarka.retrolambda'</span></span></span></span><br></pre></td></tr></table></figure></p>
@@ -176,7 +176,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.</span> <span class="toc-text">简化findViewById</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android_Studio中使用Lamda表达式"><span class="toc-number">2.</span> <span class="toc-text">Android Studio中使用Lamda表达式</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简化findViewById"><span class="toc-number">1.</span> <span class="toc-text">简化findViewById</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Android_Studio中使用Lambda表达式"><span class="toc-number">2.</span> <span class="toc-text">Android Studio中使用Lambda表达式</span></a></li></ol>
  
   </div>
 
