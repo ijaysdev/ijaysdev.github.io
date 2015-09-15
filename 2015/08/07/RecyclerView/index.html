@@ -17,7 +17,7 @@
 <meta property="og:url" content="http://yoursite.com/2015/08/07/RecyclerView/index.html">
 <meta property="og:site_name" content="JayS's blog">
 <meta property="og:description" content="打造RecyclerView的省略写法之前写过一篇打造万能的ListView适配器，后来学习了Google推出的RecyclerView。同样为了简（偷）便（懒），避免冗长的代码，可以这样来简化。首先创建ViewHolder类，实现一些getView的方法，如TextView，Button，ImageView…etc.1234567891011121314151617181920212223242">
-<meta property="og:updated_time" content="2015-08-07T05:56:26.932Z">
+<meta property="og:updated_time" content="2015-08-07T05:57:37.690Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RecyclerView适配器的省略写法">
 <meta name="twitter:description" content="打造RecyclerView的省略写法之前写过一篇打造万能的ListView适配器，后来学习了Google推出的RecyclerView。同样为了简（偷）便（懒），避免冗长的代码，可以这样来简化。首先创建ViewHolder类，实现一些getView的方法，如TextView，Button，ImageView…etc.1234567891011121314151617181920212223242">
@@ -102,7 +102,7 @@
 <p>接下来创建RecyclerViewHolder类继承字RecyclerView的ViewHolder。<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">RecyclerViewHolder</span> <span class="keyword"><span class="keyword">extends</span></span> <span class="title">RecyclerView</span>.<span class="title">ViewHolder</span> &#123;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">ViewHolder</span> mViewHolder;</span><br><span class="line"></span><br><span class="line">    public <span class="type">RecyclerViewHolder</span>(<span class="type">View</span> itemView) &#123;</span><br><span class="line">        <span class="keyword">super</span>(itemView);</span><br><span class="line">        mViewHolder = <span class="type">ViewHolder</span>.getViewHolder(itemView);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public <span class="type">ViewHolder</span> getViewHolder() &#123;</span><br><span class="line">        <span class="keyword">return</span> mViewHolder;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>接下来创建抽象类AutoAdapter继承RecyclerView的Adapter，<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AutoRVAdapter</span> <span class="keyword">extends</span> <span class="title">RecyclerView</span>.<span class="title">Adapter</span>&lt;<span class="title">RecyclerViewHolder</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;?&gt; mList;</span><br><span class="line">    <span class="keyword">private</span> Context mContext;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> AdapterView.OnItemClickListener listener;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">int</span> <span class="title">onCreateViewLayoutID</span><span class="params">(<span class="keyword">int</span> viewType)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="function"><span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(ViewHolder holder, <span class="keyword">int</span> position)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">setOnItemClickListener</span><span class="params">(</span><br><span class="line">    AdapterView.OnItemClickListener listener)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.listener = listener;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AutoRVAdapter</span><span class="params">(Context context, List&lt;?&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mContext = context;</span><br><span class="line">        <span class="keyword">this</span>.mList = list;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function">RecyclerViewHolder <span class="title">onCreateViewHolder</span><span class="params">(ViewGroup parent, <span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        View view = LayoutInflater.from(mContext).inflate(onCreateViewLayoutID(viewType), parent,<span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RecyclerViewHolder(view);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(<span class="keyword">final</span> RecyclerViewHolder holder, <span class="keyword">final</span> <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        onBindViewHolder(holder.getViewHolder(), position);</span><br><span class="line">        <span class="keyword">if</span> (listener != <span class="keyword">null</span>) &#123;</span><br><span class="line">            holder.itemView.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">                <span class="annotation">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                    listener.onItemClick(<span class="keyword">null</span>, v, position, holder.getItemId());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">int</span> <span class="title">getItemCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">return</span> mList.<span class="title">size</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>到现在我们已经把Adapter的过程封装起来，使用的时候只需继承AutoRVAdapter实现其抽象方法即可。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestAdapter</span> <span class="keyword">extends</span> <span class="title">AutoRVAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestAdapter</span><span class="params">(Context context, List&lt;?&gt; list)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(context, list);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">onCreateViewLayoutID</span><span class="params">(<span class="keyword">int</span> viewType)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> R.layout.item_row;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onBindViewHolder</span><span class="params">(ViewHolder holder, <span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        String item = (String) mList.get(position);</span><br><span class="line">        holder.getTextView(R.id.id_textview).setText(item);</span><br><span class="line">        holder.getImageView(R.id.iv_img).setImageResource(R.mipmap.ic_launcher);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过以上步骤我们就将整个过程封装起来，只要使用RecyclerView的时候将带买复制过去继承AutoRVAdapter，重写方法即可，非常方便。</p>
+<p>通过以上步骤我们就将整个过程封装起来，只要使用RecyclerView的时候将代码复制过去继承AutoRVAdapter，重写方法即可，非常方便。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -138,6 +138,14 @@
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/09/15/AndroidLaunchMode/" title="Activity的启动模式">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Activity的启动模式</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2015/07/06/Android中的一些小技巧/"  title="Android中的一些小技巧">
@@ -175,7 +183,7 @@
 		<ul>
 		
 		  
-			<li><a href="/categories/Android/" title="Android">Android<sup>1</sup></a></li>
+			<li><a href="/categories/Android/" title="Android">Android<sup>2</sup></a></li>
 		  
 		
 		  
@@ -196,19 +204,11 @@
 			
 		
 			
+				<li><a href="/tags/Android/" title="Android">Android<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/接口回调/" title="接口回调">接口回调<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Java并发/" title="Java并发">Java并发<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Android/" title="Android">Android<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/ListView适配器/" title="ListView适配器">ListView适配器<sup>1</sup></a></li>
 			
 		
 			
@@ -217,6 +217,18 @@
 		
 			
 				<li><a href="/tags/adapter/" title="adapter">adapter<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java并发/" title="Java并发">Java并发<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Activity/" title="Activity">Activity<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ListView适配器/" title="ListView适配器">ListView适配器<sup>1</sup></a></li>
 			
 		
 		</ul>
