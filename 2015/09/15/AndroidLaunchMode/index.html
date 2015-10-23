@@ -22,7 +22,7 @@ St">
 
 St">
 <meta property="og:image" content="http://i3.tietuku.com/7cb50d8d8a4eb54b.png">
-<meta property="og:updated_time" content="2015-09-15T14:11:11.140Z">
+<meta property="og:updated_time" content="2015-09-15T14:13:25.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Activity的启动模式">
 <meta name="twitter:description" content="Activity启动模式当一个Activity启动另一个Activity的时候，新启动的Activity就会置于任务栈的顶端，并处于活动状态，而启动它的Activity仍然保留在任务栈中，处于停止状态，当用户按下返回键或者调用finish()方法时，系统会移除顶部的Activity，让后面的Activity恢复活动状态。但Activity并不是只有这种启动模式，事实上，一共有四种启动模式：
@@ -113,14 +113,13 @@ St">
 <li>SingleInstance</li>
 </ul>
 <h2 id="standard">standard</h2><p>默认的启动模式，如果不指定Activity的启动模式，则使用这种方式启动Activity。这种启动模式每次都会创建新的实例。</p>
-<h2 id="singleTop">singleTop</h2><pre><code><span class="label">android:</span>launchMode=<span class="string">"singleTop"</span>
-</code></pre><p>如果在Manifest文件中指定启动模式为singleTop，那么在启动时，系统会判断当前栈顶是不是要启动的Activity，如果是则不创建新的Activity而直接引用这个Activity；如果不是则创建新的Activity。这种启动模式通常适用于接收到消息的显示界面。</p>
+<h2 id="singleTop">singleTop</h2><p>···<br>   android:launchMode=”singleTop”<br>···</p>
+<p>如果在Manifest文件中指定启动模式为singleTop，那么在启动时，系统会判断当前栈顶是不是要启动的Activity，如果是则不创建新的Activity而直接引用这个Activity；如果不是则创建新的Activity。这种启动模式通常适用于接收到消息的显示界面。</p>
 <p>例如：有两个Activity A，B，启动模式分别为standard，singleTop，若意图打开顺序为A-&gt;B-&gt;B,则实际打开顺序为A-&gt;B。</p>
-<h2 id="singleTask">singleTask</h2><pre><code><span class="label">android:</span>launchMode=<span class="string">"singleTask"</span>
-</code></pre><p>singleTask与singleTop类似，只不过singleTop是检测栈顶元素是否需要启动Activity，而singleTask是检测整个Activity栈中是否存在当前需要启动的Activity。如果存在，则将该Activity置于栈顶，并将该Activity以上的Activity都销毁。</p>
+<h2 id="singleTask">singleTask</h2><p>···<br>   android:launchMode=”singleTask”<br>···</p>
+<p>singleTask与singleTop类似，只不过singleTop是检测栈顶元素是否需要启动Activity，而singleTask是检测整个Activity栈中是否存在当前需要启动的Activity。如果存在，则将该Activity置于栈顶，并将该Activity以上的Activity都销毁。</p>
 <p>例如：应用中三个ActivityA1，A2，A3。其中A2启动模式为singleTask，那么无论如何点击，都只会有一个A2的实例，并且这三个Activity都在一个任务栈中。如操作顺序为A1-&gt;A2-&gt;A3-&gt;A2-&gt;A3-&gt;A1-&gt;A2,则<br>操作：A1-&gt;A2，A1-&gt;A2-&gt;A3 ，A1-&gt;A2-&gt;A3-&gt;A2，  A1-&gt;A2-&gt;A3-&gt;A2-&gt;A3-&gt;A1，<br>A1-&gt;A2-&gt;A3-&gt;A2-&gt;A3-&gt;A1-&gt;A2<br>实际：A1-&gt;A2 ， A1-&gt;A2-&gt;A3  ，A1-&gt;A2  ，A1-&gt;A2-&gt;A3-&gt;A1 ， A1-&gt;A2</p>
-<h2 id="singleInstance">singleInstance</h2><pre><code><span class="label">android:</span>launchMode=<span class="string">"singleInstance"</span>
-</code></pre><p>singleInstance这种启动模式和使用的浏览器工作原理类似。如果将启动模式设置为singleInstance，Activity会出现在一个新的任务栈当中，而且新的任务栈只存在这一个Activity。即如果应用A的任务栈当中创建了MainActivity实例，且启动模式为singleInstance，如果应用B也要激活MainActivity，则不需要创建，两个应用共享该Activity实例。这种启动方式常用于需要与程序分离的界面。</p>
+<h2 id="singleInstance">singleInstance</h2><p>···<br>   android:launchMode=”singleInstance”<br>···<br>singleInstance这种启动模式和使用的浏览器工作原理类似。如果将启动模式设置为singleInstance，Activity会出现在一个新的任务栈当中，而且新的任务栈只存在这一个Activity。即如果应用A的任务栈当中创建了MainActivity实例，且启动模式为singleInstance，如果应用B也要激活MainActivity，则不需要创建，两个应用共享该Activity实例。这种启动方式常用于需要与程序分离的界面。</p>
 <p>关于singleTop和singleInstance这两种启动模式：不能通过startActivityForResult()方法来启动另一个Activity，因为Google认为，不同Task之间，默认是不能传递数据的，如果一定要传递数据，只能通过Intent来绑定数据。</p>
 <p><img src="http://i3.tietuku.com/7cb50d8d8a4eb54b.png" alt="附一张官方的说明"></p>
   
@@ -158,6 +157,14 @@ St">
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2015/10/23/Java基础/" title="Java基础知识">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Java基础知识</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2015/08/07/RecyclerView/"  title="RecyclerView适配器的省略写法">
@@ -196,6 +203,10 @@ St">
 		
 		  
 			<li><a href="/categories/Android/" title="Android">Android<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>1</sup></a></li>
 		  
 		
 		  
