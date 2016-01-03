@@ -1,0 +1,494 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>解析Map型的Json数据 | JayS&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jay Song">
+    
+
+    
+    <meta name="description" content="解析Map型的Json数据
+之前在做一个地址解析的时候遇到了这种类型的json数据，当时头疼了好一阵，因为这不是常见的Json格式。我们常见的要么是一个对象，里面若干数组；要么是若干数组，里面是Json对象等。但是这个Json看起来却全部都是对象，用Android的org.json竟无法解析。
+冷静下来，仔细分析一下。在在线解析器中可以正常解析，说明这段数据是正常可以解析的。这是想到了Gson这个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解析Map型的Json数据">
+<meta property="og:url" content="http://yoursite.com/2015/12/15/解析Map型的Json数据/index.html">
+<meta property="og:site_name" content="JayS's blog">
+<meta property="og:description" content="解析Map型的Json数据
+之前在做一个地址解析的时候遇到了这种类型的json数据，当时头疼了好一阵，因为这不是常见的Json格式。我们常见的要么是一个对象，里面若干数组；要么是若干数组，里面是Json对象等。但是这个Json看起来却全部都是对象，用Android的org.json竟无法解析。
+冷静下来，仔细分析一下。在在线解析器中可以正常解析，说明这段数据是正常可以解析的。这是想到了Gson这个">
+<meta property="og:image" content="http://i4.tietuku.com/a5edb17b01f2c330.png">
+<meta property="og:updated_time" content="2016-01-03T14:35:12.206Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解析Map型的Json数据">
+<meta name="twitter:description" content="解析Map型的Json数据
+之前在做一个地址解析的时候遇到了这种类型的json数据，当时头疼了好一阵，因为这不是常见的Json格式。我们常见的要么是一个对象，里面若干数组；要么是若干数组，里面是Json对象等。但是这个Json看起来却全部都是对象，用Android的org.json竟无法解析。
+冷静下来，仔细分析一下。在在线解析器中可以正常解析，说明这段数据是正常可以解析的。这是想到了Gson这个">
+
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="JayS&#39;s blog" title="JayS&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="JayS&#39;s blog">JayS&#39;s blog</a></h1>
+				<h2 class="blog-motto">Stay calm and carry on.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/12/15/解析Map型的Json数据/" title="解析Map型的Json数据" itemprop="url">解析Map型的Json数据</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Jay Song" target="_blank" itemprop="author">Jay Song</a>
+		
+  <p class="article-time">
+    <time datetime="2015-12-14T16:00:00.000Z" itemprop="datePublished"> 发表于 2015-12-15</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#解析Map型的Json数据"><span class="toc-number">1.</span> <span class="toc-text">解析Map型的Json数据</span></a></li></ol>
+		
+		</div>
+		
+		<h3 id="解析Map型的Json数据">解析Map型的Json数据</h3><p><img src="http://i4.tietuku.com/a5edb17b01f2c330.png" alt="Json数据"></p>
+<p>之前在做一个地址解析的时候遇到了这种类型的json数据，当时头疼了好一阵，因为这不是常见的Json格式。我们常见的要么是一个对象，里面若干数组；要么是若干数组，里面是Json对象等。但是这个Json看起来却全部都是对象，用Android的org.json竟无法解析。</p>
+<p>冷静下来，仔细分析一下。在在线解析器中可以正常解析，说明这段数据是正常可以解析的。这是想到了Gson这个强大的工具。再来看看数据的组成结构。如果把最里层的数据des和code看做是一个Model的话（本来就是），那么区级地址的结构就变成了一个类型为<string,model1>的map，市级地址中又是一个<string,model2>的map,而这个Model2则是一个包含了code，des和Model1的市级Model，剩下的也是同理。</string,model2></string,model1></p>
+<p>思路理清后，可以开始写代码了，其实也就几行。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> class AreaModeal implements Serializable &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">4686973902095925495</span>L;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">String</span> code;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">String</span> des;</span><br><span class="line">    <span class="keyword">private</span> Map&lt;<span class="keyword">String</span>, City&gt; <span class="built_in">map</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getCode() &#123;</span><br><span class="line">        <span class="keyword">return</span> code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> setCode(<span class="keyword">String</span> code) &#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">String</span> getDes() &#123;</span><br><span class="line">        <span class="keyword">return</span> des;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> setDes(<span class="keyword">String</span> des) &#123;</span><br><span class="line">        <span class="keyword">this</span>.des = des;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Map&lt;<span class="keyword">String</span>, City&gt; getMap() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">map</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> setMap(Map&lt;<span class="keyword">String</span>, City&gt; <span class="built_in">map</span>) &#123;</span><br><span class="line">        <span class="keyword">this</span>.<span class="built_in">map</span> = <span class="built_in">map</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> class City &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> code;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> des;</span><br><span class="line">        <span class="keyword">private</span> Map&lt;<span class="keyword">String</span>, District&gt; <span class="built_in">map</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">String</span> getCode() &#123;</span><br><span class="line">            <span class="keyword">return</span> code;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> setCode(<span class="keyword">String</span> code) &#123;</span><br><span class="line">            <span class="keyword">this</span>.code = code;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">String</span> getDes() &#123;</span><br><span class="line">            <span class="keyword">return</span> des;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> setDes(<span class="keyword">String</span> des) &#123;</span><br><span class="line">            <span class="keyword">this</span>.des = des;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> Map&lt;<span class="keyword">String</span>, District&gt; getMap() &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">map</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> setMap(Map&lt;<span class="keyword">String</span>, District&gt; <span class="built_in">map</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.<span class="built_in">map</span> = <span class="built_in">map</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> class District &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> code;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">String</span> des;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">String</span> getCode() &#123;</span><br><span class="line">            <span class="keyword">return</span> code;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> setCode(<span class="keyword">String</span> code) &#123;</span><br><span class="line">            <span class="keyword">this</span>.code = code;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">String</span> getDes() &#123;</span><br><span class="line">            <span class="keyword">return</span> des;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> setDes(<span class="keyword">String</span> des) &#123;</span><br><span class="line">            <span class="keyword">this</span>.des = des;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有了Gson和Model之后，离我们想要的数据也只差一步了。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">gson.fromJson(json,<span class="keyword">new</span> TypeToken&lt;<span class="built_in">Map</span>&lt;<span class="built_in">String</span>,AreaModel&gt;&gt;()&#123;</span><br><span class="line"> &#125;.getType());</span><br></pre></td></tr></table></figure>
+<p>这样所有的数据都解析成了Map，剩下的工作就只剩下遍历Map取出想要的数据了。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Android/">Android</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Json解析/">Json解析</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/12/15/解析Map型的Json数据/" data-title="解析Map型的Json数据 | JayS&#39;s blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2015/10/23/Java基础/"  title="Java基础知识">
+ <strong>下一篇：</strong><br/> 
+ <span>Java基础知识
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/12/15/解析Map型的Json数据/" data-title="解析Map型的Json数据" data-url="http://yoursite.com/2015/12/15/解析Map型的Json数据/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#解析Map型的Json数据"><span class="toc-number">1.</span> <span class="toc-text">解析Map型的Json数据</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/Android/" title="Android">Android<sup>3</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/Java/" title="Java">Java<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/技术/" title="技术">技术<sup>4</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Java/" title="Java">Java<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android/" title="Android">Android<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/接口回调/" title="接口回调">接口回调<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/RecyclerView/" title="RecyclerView">RecyclerView<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/adapter/" title="adapter">adapter<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Java并发/" title="Java并发">Java并发<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Activity/" title="Activity">Activity<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ListView适配器/" title="ListView适配器">ListView适配器<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Json解析/" title="Json解析">Json解析<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.baidu.com" target="_blank" title="baidu">baidu</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 临渊羡鱼，不如退而结网 <br/>
+			</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/p/1005051807653191/home?from=page_100505_profile&amp;wvr=6&amp;mod=data#place" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/slamShotJay" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:markdunker24@gmail.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2016 
+		
+		<a href="/about" target="_blank" title="Jay Song">Jay Song</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"jays"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
